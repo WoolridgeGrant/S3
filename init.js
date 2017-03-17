@@ -5,10 +5,6 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 
-const async = require('async');
-const uuid = require('node-uuid');
-
-const constants = require('./constants').default;
 const config = require('./lib/Config.js').default;
 const logger = require('./lib/utilities/logger.js').logger;
 
@@ -42,35 +38,13 @@ function _setDirSyncFlag(path) {
     fs.closeSync(pathFD2);
 }
 
-function printUUID(metadataPath) {
-    const uuidFile = `${metadataPath}/uuid`;
-
-    try {
-        fs.accessSync(uuidFile, fs.F_OK | fs.R_OK);
-    } catch (e) {
-        if (e.code === 'ENOENT') {
-            const v = uuid.v4();
-            const fd = fs.openSync(uuidFile, 'w');
-            fs.writeSync(fd, v.toString());
-            fs.closeSync(fd);
-        } else {
-            throw e;
-        }
-    }
-
-    const uuidValue = fs.readFileSync(uuidFile);
-    logger.info(`This deployment's identifier is ${uuidValue}`);
-}
-
 if (config.backends.data !== 'file' && config.backends.metadata !== 'file') {
     logger.info('No init required. Go forth and store data.');
     process.exit(0);
 }
 
-const dataPath = config.filePaths.dataPath;
 const metadataPath = config.filePaths.metadataPath;
 
-fs.accessSync(dataPath, fs.F_OK | fs.R_OK | fs.W_OK);
 fs.accessSync(metadataPath, fs.F_OK | fs.R_OK | fs.W_OK);
 const warning = 'WARNING: Synchronization directory updates are not ' +
     'supported on this platform. Newly written data could be lost ' +
@@ -78,7 +52,6 @@ const warning = 'WARNING: Synchronization directory updates are not ' +
     'write directory updates.';
 if (os.type() === 'Linux' && os.endianness() === 'LE' && ioctl) {
     try {
-        _setDirSyncFlag(dataPath);
         _setDirSyncFlag(metadataPath);
     } catch (err) {
         logger.warn(warning, { error: err.stack });
@@ -86,21 +59,3 @@ if (os.type() === 'Linux' && os.endianness() === 'LE' && ioctl) {
 } else {
     logger.warn(warning);
 }
-
-// Create 3511 subdirectories for the data file backend
-const subDirs = Array.from({ length: constants.folderHash },
-    (v, k) => (k).toString());
-async.eachSeries(subDirs, (subDirName, next) => {
-    fs.mkdir(`${dataPath}/${subDirName}`, err => {
-        // If already exists, move on
-        if (err && err.code !== 'EEXIST') {
-            return next(err);
-        }
-        return next();
-    });
-},
- err => {
-     assert.strictEqual(err, null, `Error creating data files ${err}`);
-     logger.info('Init complete.  Go forth and store data.');
-     printUUID(metadataPath);
- });
