@@ -8,7 +8,7 @@ import { cleanup, DummyRequestLogger, makeAuthInfo } from '../helpers';
 import completeMultipartUpload from '../../../lib/api/completeMultipartUpload';
 import DummyRequest from '../DummyRequest';
 import initiateMultipartUpload from '../../../lib/api/initiateMultipartUpload';
-import objectPut from '../../../lib/api/objectPut';
+import { objectPut } from '../../../lib/api/objectPut';
 import objectGet from '../../../lib/api/objectGet';
 import objectPutPart from '../../../lib/api/objectPutPart';
 
@@ -59,7 +59,7 @@ describe('objectGet API', () => {
         bucketPut(authInfo, testPutBucketRequest, log, () => {
             objectPut(authInfo, testPutObjectRequest, undefined,
                 log, (err, result) => {
-                    assert.strictEqual(result, correctMD5);
+                    assert.strictEqual(result.contentMD5, correctMD5);
                     objectGet(authInfo, testGetRequest,
                         log, (err, result, responseMetaHeaders) => {
                             assert.strictEqual(responseMetaHeaders
@@ -77,7 +77,7 @@ describe('objectGet API', () => {
         bucketPut(authInfo, testPutBucketRequest, log, () => {
             objectPut(authInfo, testPutObjectRequest, undefined, log,
                 (err, result) => {
-                    assert.strictEqual(result, correctMD5);
+                    assert.strictEqual(result.contentMD5, correctMD5);
                     objectGet(authInfo, testGetRequest, log,
                         (err, dataGetInfo) => {
                             assert.deepStrictEqual(dataGetInfo,
@@ -221,7 +221,7 @@ describe('objectGet API', () => {
         bucketPut(authInfo, testPutBucketRequest, log, () => {
             objectPut(authInfo, testPutObjectRequest, undefined, log,
                 (err, result) => {
-                    assert.strictEqual(result, correctMD5);
+                    assert.strictEqual(result.contentMD5, correctMD5);
                     objectGet(authInfo, testGetRequest,
                     log, (err, result, responseMetaHeaders) => {
                         assert.strictEqual(result, null);

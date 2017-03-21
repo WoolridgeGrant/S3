@@ -3,7 +3,7 @@ import assert from 'assert';
 import { cleanup, DummyRequestLogger, makeAuthInfo } from '../unit/helpers';
 import { ds } from '../../lib/data/in_memory/backend';
 import bucketPut from '../../lib/api/bucketPut';
-import objectPut from '../../lib/api/objectPut';
+import { objectPut } from '../../lib/api/objectPut';
 import DummyRequest from '../unit/DummyRequest';
 
 const log = new DummyRequestLogger();
@@ -48,7 +48,7 @@ function put(bucketLoc, objLoc, bucketHost, cb) {
     bucketPut(authInfo, bucketPutReq, log, () => {
         objectPut(authInfo, testPutObjReq, undefined, log, (err, result) => {
             assert.strictEqual(err, null, `Error putting object: ${err}`);
-            assert.strictEqual(result, correctMD5);
+            assert.strictEqual(result.contentMD5, correctMD5);
             cb();
         });
     });
