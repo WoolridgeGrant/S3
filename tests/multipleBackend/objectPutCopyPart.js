@@ -6,7 +6,7 @@ import { cleanup, DummyRequestLogger, makeAuthInfo } from '../unit/helpers';
 import { ds } from '../../lib/data/in_memory/backend';
 import bucketPut from '../../lib/api/bucketPut';
 import initiateMultipartUpload from '../../lib/api/initiateMultipartUpload';
-import objectPut from '../../lib/api/objectPut';
+import { objectPut } from '../../lib/api/objectPut';
 import objectPutCopyPart from '../../lib/api/objectPutCopyPart';
 import DummyRequest from '../unit/DummyRequest';
 import { metadata } from '../../lib/metadata/in_memory/metadata';
@@ -105,7 +105,7 @@ function copyPutPart(bucketLoc, mpuLoc, srcObjLoc, mpuHost, cb) {
         };
         const copyPartReq = new DummyRequest(copyPartParams);
         objectPutCopyPart(authInfo, copyPartReq,
-            bucketName, sourceObjName, log, err => {
+            bucketName, sourceObjName, undefined, log, err => {
                 assert.strictEqual(err, null);
                 cb();
             });
