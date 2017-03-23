@@ -97,7 +97,7 @@ function _testBehaviorVersioningEnabledOrSuspended(versionIds) {
     });
 }
 
-const testing = process.env.VERSIONING === 'no' ? describe.skip : describe.skip;
+const testing = process.env.VERSIONING === 'no' ? describe.skip : describe;
 
 testing('put and get object acl with versioning', function testSuite() {
     this.timeout(600000);
