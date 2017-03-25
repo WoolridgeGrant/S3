@@ -2,6 +2,7 @@
     "port": 8000,
     "listenOn": [],
     "restEndpoints": {
+        "10.7.33.174": "file",
         "localhost": "file",
         "127.0.0.1": "file",
         "s3.docker.test": "scality-us-west-1",
@@ -31,7 +32,7 @@
     },
     "clusters": 10,
     "log": {
-        "logLevel": "info",
+        "logLevel": "trace",
         "dumpLevel": "error"
     },
     "healthChecks": {
