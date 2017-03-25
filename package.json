@@ -36,7 +36,7 @@
     "sproxydclient": "scality/sproxydclient",
     "utapi": "scality/utapi",
     "utf8": "~2.1.1",
-    "vaultclient": "scality/vaultclient",
+    "vaultclient": "scality/vaultclient#S3C-149/ft/use-request-logger-for-vaultclient",
     "werelogs": "scality/werelogs",
     "xml2js": "~0.4.16"
   },
