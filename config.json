@@ -48,10 +48,11 @@
         "logLevel": "info",
         "dumpLevel": "error"
     },
-    "antidote": {
-        "host": "localhost",
-        "port": 8087
-    },
+    "antidote": [
+		{ "host": "localhost", "port": 8087 },
+		{ "host": "localhost", "port": 8187 },
+		{ "host": "localhost", "port": 8287 }
+	],
     "userMetaIndexing":true,
     "systemMetaIndexing":true,
     "indexServerPort":7000,
