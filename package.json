@@ -33,12 +33,12 @@
     "level-sublevel": "^6.5.4",
     "multilevel": "^7.3.0",
     "node-bitmap-ewah": "dimitriosvasilas/node-bitmap-ewah",
-    "node-uuid": "^1.4.3",
     "ready-set-stream": "1.0.7",
     "socket.io": "^1.7.2",
     "sproxydclient": "scality/sproxydclient",
     "utapi": "scality/utapi",
     "utf8": "~2.1.1",
+    "uuid": "^3.0.1",
     "vaultclient": "scality/vaultclient",
     "werelogs": "scality/werelogs",
     "xml2js": "~0.4.16"

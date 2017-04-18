@@ -49,9 +49,9 @@
         "dumpLevel": "error"
     },
     "antidote": [
-		{ "host": "localhost", "port": 8087 },
 		{ "host": "localhost", "port": 8187 },
-		{ "host": "localhost", "port": 8287 }
+		{ "host": "localhost", "port": 8287 },
+		{ "host": "localhost", "port": 8387 }
 	],
     "userMetaIndexing":true,
     "systemMetaIndexing":true,
